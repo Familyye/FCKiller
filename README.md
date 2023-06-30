@@ -1,0 +1,2 @@
+# FCKiller
+KillApp
