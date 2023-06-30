@@ -1,0 +1,23 @@
+#ifndef BREVENT_OPENAT_H
+#define BREVENT_OPENAT_H
+
+#include <stdint.h>
+#include <fcntl.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+#ifdef __ANDROID__
+
+intptr_t openAt(intptr_t fd, const char *path, intptr_t flag);
+
+#else
+#define openAt openat
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif
