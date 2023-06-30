@@ -124,9 +124,9 @@ public class KillerApp extends Application {
 
     private static void killOpen(String packageName) {
         try {
-            System.loadLibrary("FCKiller");
+            System.loadLibrary("AppKiller");
         } catch (Throwable e) {
-            System.err.println("Load FCKiller library failed");
+            System.err.println("Load AppKiller library failed");
             return;
         }
         String apkPath = getApkPath(packageName);

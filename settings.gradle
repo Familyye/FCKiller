@@ -12,6 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "FCKiller"
+rootProject.name = "ApkSignature"
 include ':app'
 include ':killer'
