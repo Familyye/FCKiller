@@ -1,4 +1,4 @@
-package Google.Inc.test;
+package littleWhiteBear.SafeCheck;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     }
 
     static {
-        System.loadLibrary("fuckmt");
+        System.loadLibrary("FCKill");
     }
 
     @SuppressLint("SetTextI18n")

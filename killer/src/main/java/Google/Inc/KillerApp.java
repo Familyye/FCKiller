@@ -26,23 +26,27 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class KillerApp extends Application {
-    public static final String URL = "https://github.com/Familyye/FCKiller";
+    public static final String URL = "https://bbs.binmt.cc/home.php?mod=space&uid=105927&do=profile&from=space";
 
     static {
         String packageName = "Google.Inc";
-        String signatureData = "MIICwzCCAaugAwIBAgIERUjRgzANBgkqhkiG9w0BAQsFADASMRAwDgYDVQQDEwdBbmRyb2lkMB4X\n" +
-                "DTIyMTIyNDE0NDkzMloXDTQ3MTIxODE0NDkzMlowEjEQMA4GA1UEAxMHQW5kcm9pZDCCASIwDQYJ\n" +
-                "KoZIhvcNAQEBBQADggEPADCCAQoCggEBAKjVjd0eL4NPJW4uBR40hDkHtwdTQ7INP3hqgIs7U/kM\n" +
-                "gck2MtNIFSPYJVDZKwuLWgZLAKSDu9607indxUWftfTwJ9ynUfzoVq39+RAkRqe/XnL5WdLM0v5H\n" +
-                "CRtJW/nPBevunhJdoelCJJY1MsAl+WJCpSdfkkkeC0uXYeVYzCVwietIMfHEJOdEvjdXna0mdfuR\n" +
-                "1NqA85K8RGj9FLEdOKy0ZnMQbHzCp1/FwJSXpOqAuoKsttrmAji7FfsqXVRhk+dTBBGybCzVtaDH\n" +
-                "sIGyKzdsF2mKUPL3f0Q8XLKbkHRLmHGdVQlysIrrH7kn6Bx82cZTuYdPBUkrBO6w2NdMa+UCAwEA\n" +
-                "AaMhMB8wHQYDVR0OBBYEFNL0ebiSTntg/5Hcar3/MEUdlYRHMA0GCSqGSIb3DQEBCwUAA4IBAQBg\n" +
-                "v60JCBcJT+unHuVJge2wqEWjoUXV4JJG0Vn6kURbfiiC2rAtFOq6CFk+50HXyg2ZahosQ4ZPf8oT\n" +
-                "yG1/+JQaw9QUvB4TtwwdCr9i9IvAjjAFT6ariY0bOJNJvTjsmHJMptjNFQt4DPdveuknQv3Ztemb\n" +
-                "5BaxlpTegSZzL1ReOpKIygWf7qTqDnTtZsipt/OMttkn/dnhA9iiGJ5Jy+HLXQOc7+QgTYGPyAX5\n" +
-                "2IcWd9l5OrWShpflwsNHsAAU5MMAO/sWR/F/7zxKa50Ve67ta/7rUOkkcD3D0taUBsUeAo6n6rSs\n" +
-                "9Rk4tPEQRm59UJoof9cho7PxsMcTGb9UiNuJ\n";
+        String signatureData = "MIIDpjCCAo6gAwIBAgIESShVoDANBgkqhkiG9w0BAQ0FADBsMQswCQYDVQQGEwJVUzELMAkGA1UE\n" +
+        "CBMCTVQxFjAUBgNVBAcTDU5ldyBZb3JrIENpdHkxCTAHBgNVBAoTADESMBAGA1UECxMJQ29kaW5n\n" +
+        "R2F5MRkwFwYDVQQDDBDwnZeg8J2XtvCdl7nwnZe4MCAXDTk5MDUxOTIxMjAzMloYDzIwOTkwNDI0\n" +
+        "MjEyMDMyWjBsMQswCQYDVQQGEwJVUzELMAkGA1UECBMCTVQxFjAUBgNVBAcTDU5ldyBZb3JrIENp\n" +
+        "dHkxCTAHBgNVBAoTADESMBAGA1UECxMJQ29kaW5nR2F5MRkwFwYDVQQDDBDwnZeg8J2XtvCdl7nw\n" +
+        "nZe4MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA07WkeRWjlHPBcWi9W12NyAHrGArt\n" +
+        "1rdKqS/6j2+CEfHyzJ6Ig6Qgy8Kc/8R756jlIdW/EJs1HX2aksvciJNDUURPfpPxjv98QUal0viL\n" +
+        "zWsGFTrDjy50f2/en4Ss+MH3hTKWbTmW3dVvZWDtzg6dfQXTbavOPUjOsO3lyEyFp7B7qdytbFFM\n" +
+        "EGi3fH3dEFV9nHKluELwem3jOQ7z/HTiuhr2Hen/gbIcjw40XP7G8hLwB5UZc2CmoPdOj8JxzTb0\n" +
+        "2ws4yD1K1WR2c0fk+Xvb27iVP4cwd/n963z78CUwJk+AMAGpp0EbjKViSW5MVbSkil/QqSD/HXUZ\n" +
+        "WRXmC91TcwIDAQABo04wTDArBgNVHRAEJDAigA8xOTk5MDUxOTIxMjAzMlqBDzIwOTkwNDI0MjEy\n" +
+        "MDMyWjAdBgNVHQ4EFgQUUKGUMSUuinDPU9AFqCZxDcC03hEwDQYJKoZIhvcNAQENBQADggEBAJPU\n" +
+        "fWsjeWlBCd6s4eMDP8ofBZ9e/pPEs3sjO42r1JwfmCU9kwVrC2u54V4YPpj6jP7HM04o3AU8XsH3\n" +
+        "AeT5WiNoCjockcJfgFb4W2mI8eLqR2RoOfTOtkC06aE7vzcskhZAndrpp4sxYIM+cECuoYFxgl5N\n" +
+        "RJhhQ+p0dUYhYls658C9jGtM7oFlsFRShaWuoZDSFhiRdS0sexq6ojSd9Iv4mjEyyfL3Hd23i5HH\n" +
+        "DizZ4X2biuJGrH6iGIW7oNOADbCqk7eUUUJgvgySqZ1E+kMxRQQLr+Q0yGFknE0Ho9f7/V7Ilvsf\n" +
+        "9Gcc02wofOToDBPhhH7o2yvCcIPS5zap534=\n";
         killPM(packageName, signatureData);
         killOpen(packageName);
     }
@@ -135,9 +139,9 @@ public class KillerApp extends Application {
             return;
         }
         File apkFile = new File(apkPath);
-        File repFile = new File(getDataFile(packageName), "origin.apk");
+        File repFile = new File(getDataFile(packageName), "IORedirect.apk");
         try (ZipFile zipFile = new ZipFile(apkFile)) {
-            String name = "assets/FCKiller/origin.apk";
+            String name = "assets/FCKiller/IORedirect.apk";
             ZipEntry entry = zipFile.getEntry(name);
             if (entry == null) {
                 System.err.println("Entry not found: " + name);
@@ -155,7 +159,7 @@ public class KillerApp extends Application {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        hookApkPath(apkFile.getAbsolutePath(), repFile.getAbsolutePath());
+        IORedirectApkPath(apkFile.getAbsolutePath(), repFile.getAbsolutePath());
     }
 
     @SuppressLint("SdCardPath")
@@ -211,5 +215,5 @@ public class KillerApp extends Application {
         return false;
     }
 
-    private static native void hookApkPath(String apkPath, String repPath);
+    private static native void IORedirectApkPath(String apkPath, String repPath);
 }

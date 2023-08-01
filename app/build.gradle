@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'Google.Inc.test'
+    namespace 'littleWhiteBear.SafeCheck'
     compileSdk 32
     ndkVersion '24.0.8215888'
 
     defaultConfig {
-        applicationId "Google.Inc"
+        applicationId "littleWhiteBear.SafeCheck"
         minSdk 21
         targetSdk 32
         versionCode 1
@@ -25,16 +25,34 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file("../fake.jks")
-            storePassword "123456"
-            keyAlias "key0"
-            keyPassword "123456"
+        release {
+            storeFile file("../M.jks")
+            storePassword "Gy19981123"
+            keyAlias "SodaMilk"
+            keyPassword "Gy19981123"
             v1SigningEnabled true
             v2SigningEnabled true
         }
     }
+    
+    buildTypes {
 
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+
+        release {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
