@@ -27,12 +27,6 @@ import java.util.zip.ZipInputStream;
 
 public class MainActivity extends Activity {
 
-    public static class App extends Application {
-        static {
-            new Google.Inc.KillerApp(); // 注释掉这句即可关闭过签
-        }
-    }
-
     static {
         System.loadLibrary("FCKill");
     }
