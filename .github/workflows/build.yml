@@ -28,5 +28,5 @@ jobs:
     - name: Upload apk to artifact
       uses: actions/upload-artifact@master
       with:
-        name: ApkSignatureKillerEx
+        name: ApkSignature
         path: ${{ github.workspace }}/app/build/outputs/apk/release/*.apk

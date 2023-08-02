@@ -28,7 +28,7 @@ import java.util.zip.ZipInputStream;
 public class MainActivity extends Activity {
 
     static {
-        System.loadLibrary("FCKill");
+        System.loadLibrary("SafeCheck");
     }
 
     @SuppressLint("SetTextI18n")
