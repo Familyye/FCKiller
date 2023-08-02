@@ -8,7 +8,7 @@ android {
     ndkVersion '24.0.8215888'
 
     defaultConfig {
-        minSdk 21
+        minSdk 26
         targetSdk 32
         versionCode 1
         versionName "1.0"
