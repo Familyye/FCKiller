@@ -14,11 +14,9 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.widget.TextView;
 
-import java.lang.RuntimeException;
-import android.system.ErrnoException;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.attribute.PosixFileAttributes;
+import littleWhiteBear.Safecheck.AntiCheck.CheckSignatrue;
+import littleWhiteBear.Safecheck.AntiCheck.ApkPathChecker;
+
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
@@ -46,23 +44,35 @@ public class MainActivity extends Activity {
         String signatureFromAPK = md5(signatureFromAPK());
         String signatureFromSVC = md5(signatureFromSVC());
 
+        ApkPathChecker.checkApkPath(this); // Apk文件检测
+
         boolean isSignatureValid = signatureExpected.equals(signatureFromAPI)
                 && signatureExpected.equals(signatureFromAPK)
                 && signatureExpected.equals(signatureFromSVC);
 
-        try {
-            String packageCodePath = getPackageCodePath();
-            File packageFile = new File(packageCodePath);
-            if (packageFile.exists() && packageFile.canRead() && packageFile.canWrite() && packageFile.canExecute()) {
-                PosixFileAttributes attributes = Files.readAttributes(packageFile.toPath(), PosixFileAttributes.class);
-                int uid = attributes.owner().hashCode();
-                if (uid == 1000 && !isSignatureValid) {
-                    Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
-                    throw new RuntimeException("Invalid signature");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!isSignatureValid) {
+            Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
+            throw new RuntimeException("Invalid signature");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ApkPathChecker.checkApkPath(MainActivity.this);
+
+        String signatureExpected = "36f357767fcaf0787c0add0b96e235e5";
+        String signatureFromAPI = md5(signatureFromAPI());
+        String signatureFromAPK = md5(signatureFromAPK());
+        String signatureFromSVC = md5(signatureFromSVC());
+
+        boolean isSignatureValid = signatureExpected.equals(signatureFromAPI)
+                && signatureExpected.equals(signatureFromAPK)
+                && signatureExpected.equals(signatureFromSVC);
+
+        if (!isSignatureValid) {
+            Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
+            throw new RuntimeException("Invalid signature");
         }
     }
 
@@ -90,9 +100,8 @@ public class MainActivity extends Activity {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     private byte[] signatureFromSVC() {
@@ -108,9 +117,8 @@ public class MainActivity extends Activity {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     private String md5(byte[] bytes) {
