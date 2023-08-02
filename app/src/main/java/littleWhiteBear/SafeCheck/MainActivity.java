@@ -16,7 +16,9 @@ import android.widget.TextView;
 
 import java.lang.RuntimeException;
 import android.system.ErrnoException;
-
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.attribute.PosixFileAttributes;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.security.MessageDigest;
