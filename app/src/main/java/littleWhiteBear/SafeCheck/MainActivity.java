@@ -102,6 +102,7 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     private byte[] signatureFromSVC() {
@@ -119,6 +120,7 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return null;
     }
 
     private String md5(byte[] bytes) {
