@@ -50,10 +50,10 @@ public class MainActivity extends Activity {
         && signatureExpected.equals(signatureFromSVC);
 
         if (!isSignatureValid) {
-            MainActivity.this.moveTaskToBack(true);
             Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
-            return false;
+            throw new RuntimeException("Invalid signature");
         }
+
     }
 
     private byte[] signatureFromAPI() {
