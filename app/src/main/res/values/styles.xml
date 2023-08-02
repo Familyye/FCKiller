@@ -1,7 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-
-<style name="CustomToast">
-    <item name="android:background">@drawable/custom_toast_background</item>
-    <item name="android:textColor">@color/custom_toast_text_color</item>
-</style>
-</resources>

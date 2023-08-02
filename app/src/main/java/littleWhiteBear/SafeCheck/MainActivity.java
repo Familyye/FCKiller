@@ -49,22 +49,10 @@ public class MainActivity extends Activity {
 
         if (!isSignatureValid) {
             thisActivity.moveTaskToBack(true);
-            LayoutInflater inflater = thisActivity.getLayoutInflater();
-            View layout = inflater.inflate(R.layout.toast_custom, thisActivity.findViewById(R.id.custom_toast_container));
-        
-            ImageView icon = layout.findViewById(R.id.toast_icon);
-            icon.setImageResource(R.mipmap.ic_warning);
-        
-            TextView text = layout.findViewById(R.id.toast_text);
-            text.setText("小伙子你的想法有点危险呀😄");
-        
-            Toast toast = new Toast(thisActivity);
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setView(layout);
-            toast.show();
-        
+            Toast.makeText(thisActivity, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
             return false;
         }
+
 
     }
 
