@@ -1,4 +1,4 @@
-package littleWhiteBear.Safecheck.AntiCheck;
+package littleWhiteBear.SafeCheck.AntiCheck;
 
 import android.app.Activity;
 import android.content.Context;

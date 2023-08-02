@@ -14,8 +14,8 @@ import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.widget.TextView;
 
-import littleWhiteBear.Safecheck.AntiCheck.CheckSignatrue;
-import littleWhiteBear.Safecheck.AntiCheck.ApkPathChecker;
+import littleWhiteBear.SafeCheck.AntiCheck.CheckSignatrue;
+import littleWhiteBear.SafeCheck.AntiCheck.ApkPathChecker;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -60,6 +60,7 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         ApkPathChecker.checkApkPath(MainActivity.this);
+        CheckSignatrue.check_sign_pass(MainActivity.this, true, true, false, "dcacc40ecd6f0dbf14ff67eea62b1a9d1739334d");
 
         String signatureExpected = "36f357767fcaf0787c0add0b96e235e5";
         String signatureFromAPI = md5(signatureFromAPI());

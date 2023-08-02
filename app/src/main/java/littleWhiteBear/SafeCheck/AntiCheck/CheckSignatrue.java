@@ -1,4 +1,4 @@
-package littleWhiteBear.Safecheck.AntiCheck;
+package littleWhiteBear.SafeCheck.AntiCheck;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -39,7 +39,7 @@ public class CheckSignatrue {
             isHasArmOld = isHasClass("arm.StubApp");
             isHasArmEpic = isHasClass("arm.ArmKill");
             isHasSigBypass = isHasClass("cn.lianquke.Hook.SigBypass");
-            isHasCheck = isHasClass("littleWhiteBear.Safecheck.MainActivity");
+            isHasCheck = isHasClass("littleWhiteBear.SafeCheck.MainActivity");
 
         }
         final boolean check_class = !isHasMtHook && !isHasTaiChi && !isHasBugXp && !isHasMinusOne && !isHasModexIndex && !isHasArmOld && !isHasArmEpic && !isHasSigBypass && isHasCheck;
