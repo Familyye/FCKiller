@@ -37,6 +37,17 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PackageManager pm = getPackageManager();
+        try {
+            PackageInfo pkgInfo = pm.getPackageInfo(getPackageName(), 0);
+            if (pkgInfo.applicationInfo.uid != 1000) {
+                finish();
+                return;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        
         setContentView(R.layout.activity_main);
 
         String signatureExpected = "36f357767fcaf0787c0add0b96e235e5";
@@ -59,6 +70,18 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        
+        PackageManager pm = getPackageManager();
+        try {
+            PackageInfo pkgInfo = pm.getPackageInfo(getPackageName(), 0);
+            if (pkgInfo.applicationInfo.uid != 1000) {
+                finish();
+                return;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        
         ApkPathChecker.checkApkPath(MainActivity.this);
         CheckSignatrue.check_sign_pass(MainActivity.this, true, true, false, "dcacc40ecd6f0dbf14ff67eea62b1a9d1739334d");
 
