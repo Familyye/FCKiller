@@ -48,12 +48,10 @@ public class MainActivity extends Activity {
         && signatureExpected.equals(signatureFromSVC);
 
         if (!isSignatureValid) {
-            thisActivity.moveTaskToBack(true);
-            Toast.makeText(thisActivity, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
+            MainActivity.this.moveTaskToBack(true);
+            Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
             return false;
         }
-
-
     }
 
     private byte[] signatureFromAPI() {
