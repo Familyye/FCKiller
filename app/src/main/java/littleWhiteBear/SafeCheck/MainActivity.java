@@ -31,45 +31,45 @@ public class MainActivity extends Activity {
         System.loadLibrary("SafeCheck");
     }
 
-    @SuppressLint("SetTextI18n")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView msg = findViewById(R.id.msg);
-
-        // 以下演示了三种获取签名MD5的方式
 
         String signatureExpected = "36f357767fcaf0787c0add0b96e235e5";
         String signatureFromAPI = md5(signatureFromAPI());
         String signatureFromAPK = md5(signatureFromAPK());
         String signatureFromSVC = md5(signatureFromSVC());
 
-        // 开启过签后，API与APK方式会获取到虚假的签名MD5
 
-        // 而SVC方式总是能获取到真实的签名MD5
+        boolean isSignatureValid = signatureExpected.equals(signatureFromAPI)
+        && signatureExpected.equals(signatureFromAPK)
+        && signatureExpected.equals(signatureFromSVC);
 
-        SpannableStringBuilder sb = new SpannableStringBuilder();
-        append(sb, "Expected: ", signatureExpected, Color.BLACK);
-        append(sb, "From API: ", signatureFromAPI, signatureExpected.equals(signatureFromAPI) ? Color.BLUE : Color.RED);
-        append(sb, "From APK: ", signatureFromAPK, signatureExpected.equals(signatureFromAPK) ? Color.BLUE : Color.RED);
-        append(sb, "From SVC: ", signatureFromSVC, signatureExpected.equals(signatureFromSVC) ? Color.BLUE : Color.RED);
+        if (!isSignatureValid) {
+            thisActivity.moveTaskToBack(true);
+            LayoutInflater inflater = thisActivity.getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_custom, thisActivity.findViewById(R.id.custom_toast_container));
+        
+            ImageView icon = layout.findViewById(R.id.toast_icon);
+            icon.setImageResource(R.mipmap.ic_warning);
+        
+            TextView text = layout.findViewById(R.id.toast_text);
+            text.setText("小伙子你的想法有点危险呀😄");
+        
+            Toast toast = new Toast(thisActivity);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        
+            return false;
+        }
 
-        // 当然SVC并非绝对安全，只是相对而言更加可靠，实际运用还需结合更多的手段
-
-        msg.setText(sb);
-    }
-
-    private static void append(SpannableStringBuilder sb, String header, String value, int color) {
-        int start = sb.length();
-        sb.append(header).append(value).append("\n");
-        int end = sb.length();
-        sb.setSpan(new ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
     }
 
     private byte[] signatureFromAPI() {
         try {
-            @SuppressLint("PackageManagerGetSignatures")
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
             return info.signatures[0].toByteArray();
         } catch (PackageManager.NameNotFoundException e) {
@@ -82,11 +82,13 @@ public class MainActivity extends Activity {
             Enumeration<? extends ZipEntry> entries = zipFile.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry entry = entries.nextElement();
-                if (entry.getName().matches("(META-INF/.*)\\.(RSA|DSA|EC)")) {
-                    InputStream is = zipFile.getInputStream(entry);
-                    CertificateFactory certFactory = CertificateFactory.getInstance("X509");
-                    X509Certificate x509Cert = (X509Certificate) certFactory.generateCertificate(is);
-                    return x509Cert.getEncoded();
+                String name = entry.getName();
+                if (name.matches("(META-INF/.*)\\.(RSA|DSA|EC)")) {
+                    try (InputStream is = zipFile.getInputStream(entry)) {
+                        CertificateFactory certFactory = CertificateFactory.getInstance("X509");
+                        X509Certificate x509Cert = (X509Certificate) certFactory.generateCertificate(is);
+                        return x509Cert.getEncoded();
+                    }
                 }
             }
         } catch (Exception e) {
@@ -100,7 +102,8 @@ public class MainActivity extends Activity {
              ZipInputStream zis = new ZipInputStream(new FileInputStream(fd.getFileDescriptor()))) {
             ZipEntry entry;
             while ((entry = zis.getNextEntry()) != null) {
-                if (entry.getName().matches("(META-INF/.*)\\.(RSA|DSA|EC)")) {
+                String name = entry.getName();
+                if (name.matches("(META-INF/.*)\\.(RSA|DSA|EC)")) {
                     CertificateFactory certFactory = CertificateFactory.getInstance("X509");
                     X509Certificate x509Cert = (X509Certificate) certFactory.generateCertificate(zis);
                     return x509Cert.getEncoded();
@@ -112,24 +115,25 @@ public class MainActivity extends Activity {
         return null;
     }
 
-
     private String md5(byte[] bytes) {
         if (bytes == null) {
             return "null";
         }
         try {
-            byte[] digest = MessageDigest.getInstance("MD5").digest(bytes);
-            String hexDigits = "0123456789abcdef";
-            char[] str = new char[digest.length * 2];
-            int k = 0;
-            for (byte b : digest) {
-                str[k++] = hexDigits.charAt(b >>> 4 & 0xf);
-                str[k++] = hexDigits.charAt(b & 0xf);
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            byte[] digestBytes = digest.digest(bytes);
+            StringBuilder sb = new StringBuilder();
+            for (byte b : digestBytes) {
+                sb.append(String.format("%02x", b & 0xff));
             }
-            return new String(str);
+            return sb.toString();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private boolean compareSignatures(String expected, String actual) {
+        return expected.equals(actual);
     }
 
     private static native int openAt(String path);
