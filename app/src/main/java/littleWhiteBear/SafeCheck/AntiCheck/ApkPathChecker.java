@@ -56,6 +56,7 @@ public class ApkPathChecker {
                             || file.getName().equals("SFPatch")
                             || file.getName().equals("lianquke")
                             || file.getName().equals("virtual")
+                            || file.getName().equals("sigdata")
                             || file.getName().equals("fv")
                             || file.getName().equals("jshook")
                             || file.getName().equals("FunELFCache")
