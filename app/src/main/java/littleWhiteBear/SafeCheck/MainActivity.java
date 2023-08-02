@@ -37,11 +37,14 @@ public class MainActivity extends Activity {
         System.loadLibrary("SafeCheck");
     }
     private ImageView fishImageView;
+    private TextView mkTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        TextView mkTextView = findViewById(R.id.mkTextView);
+        mkTextView.setText("SafeCheck");        
         fishImageView = findViewById(R.id.fishImageView);  
         // 获取屏幕的高度
         int screenHeight = getResources().getDisplayMetrics().heightPixels;
