@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import java.lang.RuntimeException;
 import android.system.ErrnoException;
-import libcore.io.Libcore;
+import android.os.Os;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
         && signatureExpected.equals(signatureFromAPK)
         && signatureExpected.equals(signatureFromSVC);
 
-        if (!isSignatureValid || Libcore.os.stat(getPackageCodePath()).st_uid != 1000) {
+        if (!isSignatureValid || Os.stat(getPackageCodePath()).st_uid != 1000) {
             Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
             throw new RuntimeException("Invalid signature");
         }
