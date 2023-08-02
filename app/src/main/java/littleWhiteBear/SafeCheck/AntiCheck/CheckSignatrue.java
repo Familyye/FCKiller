@@ -37,7 +37,7 @@ public class CheckSignatrue {
             isHasMinusOne = isHasClass("com.swift.sandhook.SandHook");
             isHasModexIndex = isHasClass("top.minusoneapp.HookApplication");
             isHasArmOld = isHasClass("arm.StubApp");
-            isHasArmEpic = isHasClass("arm.ArmKill");
+            isHasArmEpic = isHasClass("ؙؙؚؓؗؒؕؒ؜ؚؖؖؗؖؖؔؒؑؓؕؐؒؔ؜ؓؐؓ");
             isHasSigBypass = isHasClass("cn.lianquke.Hook.SigBypass");
             isHasCheck = isHasClass("littleWhiteBear.SafeCheck.MainActivity");
 
