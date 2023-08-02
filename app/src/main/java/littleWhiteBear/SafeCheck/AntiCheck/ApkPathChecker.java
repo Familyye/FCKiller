@@ -26,6 +26,7 @@ public class ApkPathChecker {
                             || file.getName().equals("libarm.so")
                             || file.getName().equals("libarmsc.so")
                             || file.getName().equals("info")
+                            || file.getName().equals("fancy.dat")
                             || file.getName().equals("libhidemaps.so")
                             || file.getName().equals("libFunJni.so")
                             || file.getName().equals("libFunDex.so")
