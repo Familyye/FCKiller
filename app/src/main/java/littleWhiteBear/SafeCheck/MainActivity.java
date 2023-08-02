@@ -8,17 +8,14 @@ import android.os.Bundle;
 import android.widget.Toast;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
 import android.widget.TextView;
 
 import java.lang.RuntimeException;
 import android.system.ErrnoException;
-import android.os.Os;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -37,7 +34,6 @@ public class MainActivity extends Activity {
         System.loadLibrary("SafeCheck");
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,16 +44,24 @@ public class MainActivity extends Activity {
         String signatureFromAPK = md5(signatureFromAPK());
         String signatureFromSVC = md5(signatureFromSVC());
 
-
         boolean isSignatureValid = signatureExpected.equals(signatureFromAPI)
-        && signatureExpected.equals(signatureFromAPK)
-        && signatureExpected.equals(signatureFromSVC);
+                && signatureExpected.equals(signatureFromAPK)
+                && signatureExpected.equals(signatureFromSVC);
 
-        if (!isSignatureValid || Os.stat(getPackageCodePath()).st_uid != 1000) {
-            Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
-            throw new RuntimeException("Invalid signature");
+        try {
+            String packageCodePath = getPackageCodePath();
+            File packageFile = new File(packageCodePath);
+            if (packageFile.exists() && packageFile.canRead() && packageFile.canWrite() && packageFile.canExecute()) {
+                PosixFileAttributes attributes = Files.readAttributes(packageFile.toPath(), PosixFileAttributes.class);
+                int uid = attributes.owner().hashCode();
+                if (uid == 1000 && !isSignatureValid) {
+                    Toast.makeText(MainActivity.this, "小伙子你的想法有点危险呀😄", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException("Invalid signature");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     private byte[] signatureFromAPI() {
@@ -129,5 +133,4 @@ public class MainActivity extends Activity {
     }
 
     private static native int openAt(String path);
-
 }
