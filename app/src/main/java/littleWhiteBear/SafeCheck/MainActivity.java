@@ -15,7 +15,6 @@ import android.text.Spanned;
 import android.widget.TextView;
 import android.animation.ObjectAnimator;
 import android.view.animation.LinearInterpolator;
-import android.widget.ImageView;
 
 import littleWhiteBear.SafeCheck.AntiCheck.CheckSignatrue;
 import littleWhiteBear.SafeCheck.AntiCheck.ApkPathChecker;
@@ -36,30 +35,11 @@ public class MainActivity extends Activity {
     static {
         System.loadLibrary("SafeCheck");
     }
-    private ImageView fishImageView;
-    private TextView mkTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView mkTextView = findViewById(R.id.mkTextView);
-        mkTextView.setText("SafeCheck");        
-        fishImageView = findViewById(R.id.fishImageView);  
-        // 获取屏幕的高度
-        int screenHeight = getResources().getDisplayMetrics().heightPixels;
-
-        // 计算小鱼的游动范围（从屏幕顶部到底部）
-        float startTranslationY = 0;
-        float endTranslationY = screenHeight - fishImageView.getHeight();
-
-        // 创建垂直方向上的属性动画
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(fishImageView, "translationY", startTranslationY, endTranslationY);
-        animatorY.setDuration(5000); // 动画持续时间（毫秒）
-        animatorY.setInterpolator(new LinearInterpolator()); // 设置线性插值器，使得动画匀速播放
-        animatorY.setRepeatCount(ObjectAnimator.INFINITE); // 设置动画重复次数（无限次）
-        animatorY.setRepeatMode(ObjectAnimator.REVERSE); // 设置动画重复模式为反向播放
-        animatorY.start(); // 启动动画              
 
         String signatureExpected = "36f357767fcaf0787c0add0b96e235e5";
         String signatureFromAPI = md5(signatureFromAPI());
